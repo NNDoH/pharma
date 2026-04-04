@@ -244,7 +244,7 @@ export const CHAPTERS = {
           referral:"5–7일 이상 지속 시 전문의 상담"},
         r_expectorant:{type:"result", title:"습성기침 — 거담제",
           drugs:[
-            {rank:"1차 선택", name:"구아이페네신", examples:["로비투신","화이투벤"), dosing:"성인 200–400 mg, 1일 4회, 충분한 수분 섭취 필수"},
+            {rank:"1차 선택", name:"구아이페네신", examples:["로비투신","화이투벤"], dosing:"성인 200–400 mg, 1일 4회, 충분한 수분 섭취 필수"},
             {rank:"1차 선택", name:"암브록솔", examples:["뮤코펙트","암브로콜"], dosing:"성인 30 mg, 1일 2–3회 — 기도 점막 수분 증가"},
             {rank:"2차 선택", name:"브롬헥신", examples:["비졸본","브롬헥신"], dosing:"성인 8–16 mg, 1일 3회"},
             {rank:"2차 선택", name:"아세틸시스테인", examples:["뮤코미스트","아세코"], dosing:"성인 200 mg, 1일 3회 — 객담 점도 낮춤"}
@@ -276,7 +276,7 @@ export const CHAPTERS = {
         r_nasal_full:{type:"result", title:"코막힘 치료",
           drugs:[
             {rank:"1차 선택", name:"옥시메타졸린 비강스프레이", examples:["아프린","나조넥스OTC"], dosing:"2–3회 분무, 1일 2회, 최대 3일 사용 — 약물성 비염 예방", cautions:["3일 초과 사용 금지 (반동성 충혈)","6세 미만 금기"]},
-            {rank:"1차 선택", name:"크실로메타졸린 비강스프레이", examples:["오트리빈"], dosing:"1–2회 분무, 1일 3회, 최대 3일, cautions:["3일 초과 금지"]},
+            {rank:"1차 선택", name:"크실로메타졸린 비강스프레이", examples:["오트리빈"], dosing:"1–2회 분무, 1일 3회, 최대 3일", cautions:["3일 초과 금지"]},
             {rank:"2차 선택", name:"슈도에페드린 경구", examples:["수다페드"], dosing:"성인 60 mg, 1일 3–4회 — 전신 충혈제거 효과", cautions:["고혈압·심장질환·갑상선항진·전립선비대 주의","불면·빈맥 부작용"]}
           ],
           nonPharm:["생리식염수 비강세척","습도 유지","수분 섭취"],
@@ -335,3 +335,51 @@ export const CHAPTERS = {
       }
     }
   },
+
+  5: {
+    id:5, partId:3, title:"무좀 (족부백선)",
+    summary:"발가락 사이·발바닥의 피부 사상균 감염에 대한 OTC 항진균제 선택 가이드",
+    keywords:["무좀","족부백선","발가락","각질","수포","가려움","항진균"],
+    algorithm:{
+      start:"q_redflag",
+      nodes:{
+        q_redflag:{type:"question", text:"다음 위험 신호가 있나요?", subtext:"당뇨·면역저하·림프부종·2차 세균감염(발적·화농·열감)",
+          options:[
+            {label:"예 — 해당 있음", next:"w_redflag"},
+            {label:"아니오 — 해당 없음", next:"q_type"}
+          ]},
+        w_redflag:{type:"warning", text:"전문의 진료 권고",
+          reasons:["당뇨·면역저하 환자: 세균감염 합병 위험 높음","화농·봉와직염 징후 → 항생제 필요 가능성","림프부종 동반 → 반복 감염 예방 관리 필요"],
+          action:"피부과 진료 권고"},
+        q_type:{type:"question", text:"무좀의 형태는?",
+          options:[
+            {label:"지간형 — 발가락 사이 짓무름·균열·인설", next:"q_severity"},
+            {label:"소수포형 — 발바닥·발가락 수포·가려움", next:"q_severity"},
+            {label:"각화형 — 발바닥 전체 두꺼운 각질·인설", next:"r_terbinafine"}
+          ]},
+        q_severity:{type:"question", text:"증상 범위와 기간은?",
+          options:[
+            {label:"국소적·초발 또는 재발 (6개월 이내)", next:"r_azole"},
+            {label:"광범위하거나 치료 실패 반복", next:"r_terbinafine"}
+          ]},
+        r_azole:{type:"result", title:"무좀 1차 치료 — 아졸계",
+          drugs:[
+            {rank:"1차 선택", name:"클로트리마졸 1% 크림/액", examples:["카네스텐","클로트리신"], dosing:"1일 2–3회 환부 도포, 최소 2–4주 지속 (증상 소실 후 1–2주 더 적용)"},
+            {rank:"1차 선택", name:"미코나졸 2% 크림/파우더", examples:["다이신","마이코나졸"], dosing:"1일 2회 도포, 2–4주 — 파우더 제형은 신발 내 적용 가능"},
+            {rank:"1차 선택", name:"에코나졸 1% 크림", examples:["에코나졸크림"], dosing:"1일 1–2회, 최소 4주"}
+          ],
+          nonPharm:["발가락 사이 건조하게 유지","통기성 있는 면 양말 착용","공공 샤워실 슬리퍼 착용","감염된 양말·신발 소독"],
+          counseling:["증상이 나아져도 최소 4주 완료 필수 — 재발 방지","아침 세족 후, 저녁 취침 전 2회 도포 권장","파우더 제형을 신발 안에도 적용하면 재발 예방 효과"],
+          referral:"4주 치료 후 호전 없거나 손발톱 감염 동반 시 피부과 진료"},
+        r_terbinafine:{type:"result", title:"무좀 고효능 치료 — 테르비나핀",
+          drugs:[
+            {rank:"1차 선택", name:"테르비나핀 1% 크림/겔/스프레이", examples:["라미실","무좀라미실AT"], dosing:"지간형: 1일 1회, 1주 / 소수포·각화형: 1일 2회, 2–4주"},
+            {rank:"보조", name:"클로트리마졸 + 베타메타손 복합", examples:["로트리손"], dosing:"염증·가려움 심할 때 단기(1–2주) 사용 — 스테로이드 포함이므로 장기 사용 금지"}
+          ],
+          nonPharm:["각화형은 각질 제거 후 항진균제 도포 효과 상승","요소크림 병행으로 각질 연화 가능"],
+          counseling:["테르비나핀은 균진균 작용 — 아졸계보다 치료 기간 짧음","각화형 OTC 치료 실패율 높음 — 개선 없으면 경구 항진균제 처방 필요 안내"],
+          referral:"2주 치료 후 호전 없거나 손발톱 침범 확인 시 피부과 진료 (경구 항진균제 필요)"}
+      }
+    }
+  },
+};
